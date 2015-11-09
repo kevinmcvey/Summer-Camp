@@ -1,0 +1,28 @@
+<!--
+  TODO LIST:
+  1: Modify CanvasController (and other calling controllers) to have one layer
+     for the square itself and one shared layer (between all squares) for shadows
+
+  2: Create new Canvas layers when Layer constructor is called
+     (instead of requiring they be provided). New constructor should take in
+     shadow layer and OPTIONAL square layer parameters.
+-->
+<html>
+    <head>
+        <title>Another day at summer camp</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="src/Util.js"></script>
+        <script type="text/javascript" src="src/CanvasController.js"></script>
+        <script type="text/javascript" src="src/Square.js"></script>
+        <script type="text/javascript" src="src/InputController.js"></script>
+        <script type="text/javascript" src="src/Layer.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <canvas id="otherCanvas"></canvas>
+    </body>
+    <script>
+      var layer1 = new Layer('canvas');
+      var layer2 = new Layer('otherCanvas');
+    </script>
+</html>
