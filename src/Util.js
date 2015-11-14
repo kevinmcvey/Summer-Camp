@@ -8,9 +8,3 @@ Number.prototype.isNegativeZero = function() {
   return n === 0 && (((n = +n) || (1 / n)) < 0);
 }
 
-Window.prototype.bindAll = function(events, callable) {
-  (events.split(' ')).forEach(function(event) {
-    window.addEventListener(event, callable, false);
-  });
-};
-

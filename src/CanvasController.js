@@ -6,9 +6,9 @@ function CanvasController(elementId) {
   this.initialize(elementId);
 
   var _this = this;
-  window.addEventListener('resize', function() {
+  $(window).on('resize', function() {
     _this.resizeCanvasToWindow();
-  }, false);
+  });
 
   return this;
 }

@@ -8,11 +8,19 @@ function InputController(canvasController, square) {
 
   var _this = this;
 
-  function mousedown(event) {
+  function mousedown(event, manualEvent) {
+    if (manualEvent) {
+      event = manualEvent;
+    }
+
     _this.beginDrag(event);
   }
 
-  function mousemove(event) {
+  function mousemove(event, manualEvent) {
+    if (manualEvent) {
+      event = manualEvent;
+    }
+
     _this.midDrag(event);
     _this.redraw(event.pageX, event.pageY);
   }
@@ -25,24 +33,24 @@ function InputController(canvasController, square) {
     _this.drawBlank();
   }
 
-  window.addEventListener('mousedown', mousedown, false);
-  window.addEventListener('mousemove', mousemove, false);
-  window.addEventListener('mouseup', mouseup, false);
-  window.addEventListener('mouseout', mouseout, false);
+  $(window).on('mousedown', mousedown);
+  $(window).on('mousemove', mousemove);
+  $(window).on('mouseup', mouseup);
+  $(window).on('mouseout', mouseout);
 
   // Mobile events
-  window.addEventListener('touchstart', function(touchEvent) {
+  $(window).on('touchstart', function(touchEvent) {
     mousedown(touchEvent.touches[0]);
-  }, false);
+  });
 
-  window.addEventListener('touchmove', function(touchEvent) {
+  $(window).on('touchmove', function(touchEvent) {
     mousemove(touchEvent.touches[0]);
-  }, false);
+  });
 
-  window.addEventListener('touchend', function() {
+  $(window).on('touchend', function() {
     mouseup();
     mouseout();
-  }, false);
+  });
 
   return this;
 }
