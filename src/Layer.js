@@ -1,13 +1,17 @@
 var DEFAULT_SQUARE_WIDTH = 100;
+var DEFAULT_START_X = (window.innerWidth - DEFAULT_SQUARE_WIDTH) / 2;
+var DEFAULT_START_Y = (window.innerHeight - DEFAULT_SQUARE_WIDTH) / 2;
 var DEFAULT_FILL_COLOR = '#000000';
 var DEFAULT_GRADIENT_START_COLOR = '#999999';
 var DEFAULT_GRADIENT_END_COLOR = '#ffffff';
 
-function Layer(elementId, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
+function Layer(elementId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
   if (window === this) {
     return new Layer();
   }
 
+  startX = (startX === undefined) ? DEFAULT_START_X : startX;
+  startY = (startY === undefined) ? DEFAULT_START_Y : startY;
   this.squareWidth = squareWidth || DEFAULT_SQUARE_WIDTH;
   this.fillColor = fillColor || DEFAULT_FILL_COLOR;
   this.gradientStartColor = gradientStartColor || DEFAULT_GRADIENT_START_COLOR;
@@ -16,8 +20,8 @@ function Layer(elementId, squareWidth, fillColor, gradientStartColor, gradientEn
   this.canvasController = new CanvasController(elementId);
 
   this.square = new Square(this.canvasController,
-      (window.innerWidth - this.squareWidth) / 2,
-      (window.innerHeight - this.squareWidth) / 2,
+      startX,
+      startY,
       this.squareWidth,
       this.fillColor,
       this.gradientStartColor,
