@@ -1,3 +1,8 @@
+const EVENT_MOUSEDOWN = 0;
+const EVENT_MOUSEUP = 1;
+const EVENT_MOUSEMOVE = 2;
+const EVENT_EXIT = 3;
+
 function InputController(canvasController, square) {
   if (window === this) {
     return new InputController(canvasController, square);
@@ -5,6 +10,8 @@ function InputController(canvasController, square) {
 
   this.canvasController = canvasController;
   this.square = square;
+  this.eventLog = [];
+  this.startTime = (new Date()).getTime();
 
   var _this = this;
 
@@ -14,6 +21,7 @@ function InputController(canvasController, square) {
     }
 
     _this.beginDrag(event);
+    _this.logEvent(EVENT_MOUSEDOWN, event);
   }
 
   function mousemove(event, manualEvent) {
@@ -23,14 +31,17 @@ function InputController(canvasController, square) {
 
     _this.midDrag(event);
     _this.redraw(event.pageX, event.pageY);
+    _this.logEvent(EVENT_MOUSEMOVE, event);
   }
 
   function mouseup() {
     _this.endDrag();
+    _this.logEvent(EVENT_MOUSEUP);
   }
 
   function mouseout() {
     _this.drawBlank();
+    _this.logEvent(EVENT_EXIT);
   }
 
   $(window).on('mousedown', mousedown);
@@ -90,6 +101,49 @@ InputController.prototype = {
   drawBlank: function() {
     this.canvasController.reset();
     this.square.drawSelf();
+  },
+
+  logEvent: function(eventId, event) {
+    var currentTime = (new Date()).getTime();
+    var executionTime = currentTime - this.startTime;
+
+    var log = [eventId, executionTime];
+
+    if (event) {
+      log.push(event.pageX);
+      log.push(event.pageY);
+    }
+
+    this.eventLog.push(log);
+  },
+
+  // TODO: Interpolation between events
+  // TODO: Move window events to containing canvas element
+  replayLogs: function(eventLog) {
+    eventLog.forEach(function(event) {
+      (function createTimeout(event) {
+        //console.log(event[0] + ' ' + event[1]);
+        setTimeout(function() {
+          var eventId = event[0];
+          var eventX = event[2];
+          var eventY = event[3];
+          switch(eventId) {
+            case EVENT_MOUSEDOWN:
+              $(window).trigger('mousedown', { pageX: eventX, pageY: eventY });
+              break;
+            case EVENT_MOUSEUP:
+              $(window).trigger('mouseup');
+              break;
+            case EVENT_MOUSEMOVE:
+              $(window).trigger('mousemove', { pageX: eventX, pageY: eventY });
+              break;
+            case EVENT_EXIT:
+              $(window).trigger('mouseout');
+              break;
+          }
+        }, event[1]);
+      })(event);
+    });
   }
 }
 
