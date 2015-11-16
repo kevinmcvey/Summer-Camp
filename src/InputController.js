@@ -44,21 +44,21 @@ function InputController(canvasController, square) {
     _this.logEvent(EVENT_EXIT);
   }
 
-  $(window).on('mousedown', mousedown);
-  $(window).on('mousemove', mousemove);
-  $(window).on('mouseup', mouseup);
-  $(window).on('mouseout', mouseout);
+  $(this.canvasController.canvas).on('mousedown', mousedown);
+  $(this.canvasController.canvas).on('mousemove', mousemove);
+  $(this.canvasController.canvas).on('mouseup', mouseup);
+  $(this.canvasController.canvas).on('mouseout', mouseout);
 
   // Mobile events
-  $(window).on('touchstart', function(touchEvent) {
+  $(this.canvasController.canvas).on('touchstart', function(touchEvent) {
     mousedown(touchEvent.touches[0]);
   });
 
-  $(window).on('touchmove', function(touchEvent) {
+  $(this.canvasController.canvas).on('touchmove', function(touchEvent) {
     mousemove(touchEvent.touches[0]);
   });
 
-  $(window).on('touchend', function() {
+  $(this.canvasController.canvas).on('touchend', function() {
     mouseup();
     mouseout();
   });
@@ -118,31 +118,36 @@ InputController.prototype = {
   },
 
   // TODO: Interpolation between events
-  // TODO: Move window events to containing canvas element
+  // TODO: Turn on and off recording
   replayLogs: function(eventLog) {
+    var _this = this;
     eventLog.forEach(function(event) {
-      (function createTimeout(event) {
-        //console.log(event[0] + ' ' + event[1]);
+
+      (function createTimeout(_this, event) {
+        var eventTime = event[1];
+
         setTimeout(function() {
           var eventId = event[0];
           var eventX = event[2];
           var eventY = event[3];
+
           switch(eventId) {
             case EVENT_MOUSEDOWN:
-              $(window).trigger('mousedown', { pageX: eventX, pageY: eventY });
+              $(_this.canvasController.canvas).trigger('mousedown', { pageX: eventX, pageY: eventY });
               break;
             case EVENT_MOUSEUP:
-              $(window).trigger('mouseup');
+              $(_this.canvasController.canvas).trigger('mouseup');
               break;
             case EVENT_MOUSEMOVE:
-              $(window).trigger('mousemove', { pageX: eventX, pageY: eventY });
+              $(_this.canvasController.canvas).trigger('mousemove', { pageX: eventX, pageY: eventY });
               break;
             case EVENT_EXIT:
-              $(window).trigger('mouseout');
+              $(_this.canvasController.canvas).trigger('mouseout');
               break;
           }
-        }, event[1]);
-      })(event);
+        }, eventTime);
+      })(_this, event);
+
     });
   }
 }
