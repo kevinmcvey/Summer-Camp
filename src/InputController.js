@@ -21,7 +21,10 @@ function InputController(canvasController, square) {
     }
 
     _this.beginDrag(event);
-    _this.logEvent(EVENT_MOUSEDOWN, event);
+
+    if (!event.silent) {
+      _this.logEvent(EVENT_MOUSEDOWN, event);
+    }
   }
 
   function mousemove(event, manualEvent) {
@@ -31,17 +34,34 @@ function InputController(canvasController, square) {
 
     _this.midDrag(event);
     _this.redraw(event.pageX, event.pageY);
-    _this.logEvent(EVENT_MOUSEMOVE, event);
+
+    if (!event.silent) {
+      _this.logEvent(EVENT_MOUSEMOVE, event);
+    }
   }
 
-  function mouseup() {
+  function mouseup(event, manualEvent) {
+    if (manualEvent) {
+      event = manualEvent;
+    }
+
     _this.endDrag();
-    _this.logEvent(EVENT_MOUSEUP);
+
+    if (!event.silent) {
+      _this.logEvent(EVENT_MOUSEUP);
+    }
   }
 
-  function mouseout() {
+  function mouseout(event, manualEvent) {
+    if (manualEvent) {
+      event = manualEvent;
+    }
+
     _this.drawBlank();
-    _this.logEvent(EVENT_EXIT);
+
+    if (!event.silent) {
+      _this.logEvent(EVENT_EXIT);
+    }
   }
 
   $(this.canvasController.canvas).on('mousedown', mousedown);
@@ -51,16 +71,16 @@ function InputController(canvasController, square) {
 
   // Mobile events
   $(this.canvasController.canvas).on('touchstart', function(touchEvent) {
-    mousedown(touchEvent.touches[0]);
+    mousedown(touchEvent.originalEvent.touches[0]);
   });
 
   $(this.canvasController.canvas).on('touchmove', function(touchEvent) {
-    mousemove(touchEvent.touches[0]);
+    mousemove(touchEvent.originalEvent.touches[0]);
   });
 
-  $(this.canvasController.canvas).on('touchend', function() {
-    mouseup();
-    mouseout();
+  $(this.canvasController.canvas).on('touchend', function(touchEvent) {
+    mouseup({});
+    mouseout({});
   });
 
   return this;
@@ -118,7 +138,6 @@ InputController.prototype = {
   },
 
   // TODO: Interpolation between events
-  // TODO: Turn on and off recording
   replayLogs: function(eventLog) {
     var _this = this;
     eventLog.forEach(function(event) {
@@ -133,16 +152,16 @@ InputController.prototype = {
 
           switch(eventId) {
             case EVENT_MOUSEDOWN:
-              $(_this.canvasController.canvas).trigger('mousedown', { pageX: eventX, pageY: eventY });
+              $(_this.canvasController.canvas).trigger('mousedown', { pageX: eventX, pageY: eventY, silent: true });
               break;
             case EVENT_MOUSEUP:
-              $(_this.canvasController.canvas).trigger('mouseup');
+              $(_this.canvasController.canvas).trigger('mouseup', { silent: true });
               break;
             case EVENT_MOUSEMOVE:
-              $(_this.canvasController.canvas).trigger('mousemove', { pageX: eventX, pageY: eventY });
+              $(_this.canvasController.canvas).trigger('mousemove', { pageX: eventX, pageY: eventY, silent: true });
               break;
             case EVENT_EXIT:
-              $(_this.canvasController.canvas).trigger('mouseout');
+              $(_this.canvasController.canvas).trigger('mouseout', { silent: true });
               break;
           }
         }, eventTime);
