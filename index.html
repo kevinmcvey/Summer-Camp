@@ -1,8 +1,21 @@
 <!--
   TODO
-     Create new Canvas layers when Layer constructor is called
-     (instead of requiring they be provided). New constructor should take in
-     shadow layer and OPTIONAL square layer parameters.
+    1. Intro and outro
+    2. Music (pls)
+    3. Allow for pausing (when navigating away)
+    4. Fade should be piecewise: no fade for 50% of the "day", then fade out.
+    5. Indicate when the user is no longer in control.
+    6. If squares start from a random location indicate which square is the new square
+
+  CLEANUP
+    1. Everything should set directly to prototype, not overwrite it
+    2. Layer and cover should inherit from a common parent
+
+  BUGS
+    1. Covered (non-connected) layers think the mouse is in the square when navigating away
+       from the page
+    2. Navigating away doesn't pause, but it should.
+    3. It goes insane if you navigate away (wrap into pause feature)
 -->
 <html>
     <head>
@@ -13,19 +26,23 @@
         <script type="text/javascript" src="src/Square.js"></script>
         <script type="text/javascript" src="src/InputController.js"></script>
         <script type="text/javascript" src="src/Layer.js"></script>
+        <script type="text/javascript" src="src/LayerController.js"></script>
         <script type="text/javascript" src="src/Cover.js"></script>
+        <script type="text/javascript" src="src/SummerCamp.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     </head>
     <body>
-        <canvas id="canvas"></canvas>
-        <canvas id="otherCanvas"></canvas>
-        <canvas id="thirdCanvas"></canvas>
-        <canvas id="cover"></canvas>
+        <div id="canvas-container"></div>
+        <div id="cover-container"></div>
     </body>
     <script>
-      var layer1 = new Layer('canvas', 100, 100, undefined, undefined, '#ffcccc', '#ffffff');
-      var layer2 = new Layer('otherCanvas', 300, 300, undefined, undefined, '#ccccff', '#ffffff');
-      var layer3 = new Layer('thirdCanvas', 500, 500, undefined, undefined, '#ccffcc', '#ffffff');
-      var cover = new Cover('cover', 'thirdCanvas');
+      var layerController = new LayerController('canvas-container');
+      var summerCamp = new SummerCamp(layerController, 'cover-container', 10);
+      summerCamp.initialize();
+
+      //var layer1 = new Layer('canvas-container', 100, 100, undefined, undefined, '#ffcccc', '#ffffff');
+      //var layer2 = new Layer('otherCanvas', 300, 300, undefined, undefined, '#ccccff', '#ffffff');
+      //var layer3 = new Layer('thirdCanvas', 500, 500, undefined, undefined, '#ccffcc', '#ffffff');
+      //var cover = new Cover('cover', layer1.canvasId);
     </script>
 </html>

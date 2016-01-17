@@ -4,10 +4,11 @@ var DEFAULT_START_Y = (window.innerHeight - DEFAULT_SQUARE_WIDTH) / 2;
 var DEFAULT_FILL_COLOR = '#000000';
 var DEFAULT_GRADIENT_START_COLOR = '#999999';
 var DEFAULT_GRADIENT_END_COLOR = '#ffffff';
+var MAX_ELEMENTS = 1000;
 
-function Layer(elementId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
+function Layer(containerId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
   if (window === this) {
-    return new Layer();
+    return new Layer(containerId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor);
   }
 
   startX = (startX === undefined) ? DEFAULT_START_X : startX;
@@ -17,7 +18,10 @@ function Layer(elementId, startX, startY, squareWidth, fillColor, gradientStartC
   this.gradientStartColor = gradientStartColor || DEFAULT_GRADIENT_START_COLOR;
   this.gradientEndColor = gradientEndColor || DEFAULT_GRADIENT_END_COLOR;
 
-  this.canvasController = new CanvasController(elementId);
+  this.containerId = containerId;
+  this.canvasId = this.getRandomElementId();
+  this.createLayerCanvas(this.canvasId);
+  this.canvasController = new CanvasController(this.canvasId);
 
   this.square = new Square(this.canvasController,
       startX,
@@ -39,13 +43,25 @@ function Layer(elementId, startX, startY, squareWidth, fillColor, gradientStartC
   return this;
 }
 
-Layer.prototype = {
-  squareWidth: undefined,
-  fillColor: undefined,
-  gradientStartColor: undefined,
-  gradientEndColor: undefined,
+// Generate a random number, retrying if already present. This is a naive
+// approach but we should NEVER expect a large number of canvases to be
+// generated anyway. That's not the goal of this project.
+Layer.prototype.getRandomElementId = function() {
+  var id = 'canvas-' + Math.floor(Math.random() * MAX_ELEMENTS);
 
-  canvasController: undefined,
-  square: undefined,
-  inputController: undefined
+  if ($('#' + id).length) {
+    return getRandomElementId();
+  }
+
+  return id;
+}
+
+Layer.prototype.createLayerCanvas = function(canvasId) {
+  $('#' + this.containerId).append(
+    '<canvas id="' + canvasId + '"></canvas>'
+  );
+}
+
+Layer.prototype.removeLayerCanvas = function() {
+  $('#' + this.canvasId).remove();
 }

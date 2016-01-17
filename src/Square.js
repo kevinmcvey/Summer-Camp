@@ -11,6 +11,12 @@ function Square(canvasController, x, y, width, fillColor, gradientStartColor, gr
   this.cx = this.x + (this.width / 2);
   this.cy = this.y + (this.width / 2);
 
+  // Backups for the sake of restarting
+  this.startX = this.x;
+  this.startY = this.y;
+  this.startCx = this.cx;
+  this.startCy = this.cy;
+
   this.fillColor = fillColor;
   this.gradientStartColor = gradientStartColor;
   this.gradientEndColor = gradientEndColor;
@@ -116,8 +122,11 @@ Square.prototype = {
   },
 
   getShadowShape: function(quadrant, mouseX, mouseY) {
+    // Currently if hovering over the box, show nothing. Uncomment second line to instead
+    // fill the entire window
     if (quadrant === -1) {
-      return [[0,0], [window.innerWidth, 0], [window.innerWidth, window.innerHeight], [0, window.innerHeight]];
+      return [[]];
+      //return [[0,0], [window.innerWidth, 0], [window.innerWidth, window.innerHeight], [0, window.innerHeight]];
     }
 
     var quadrantIntersectPoints = this.quadrantIntersectPoints[quadrant];
@@ -213,6 +222,20 @@ Square.prototype = {
 
   endDrag: function() {
     this.dragging = false;
+  },
+
+  returnToStart: function() {
+    this.x = this.startX;
+    this.y = this.startY;
+    this.cx = this.startCx;
+    this.cy = this.startCy;
+
+    this.exteriorPoints = this.regenerateExteriorPoints();
+    this.quadrantIntersectPoints = this.regenerateQuadrantIntersectPoints();
+    this.shadowGradient = this.regenerateRadialGradient();
+
+    this.canvasController.reset();
+    this.drawSelf();
   }
 }
 

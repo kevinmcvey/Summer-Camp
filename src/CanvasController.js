@@ -81,7 +81,6 @@ CanvasController.prototype = {
     gradient.addColorStop(0.95, endColor);
 
     return gradient;
-
   },
 
   reset: function() {
