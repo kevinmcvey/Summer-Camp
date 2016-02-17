@@ -17,3 +17,42 @@ canvas {
     width: 100%;
     height: 100%;
 }
+
+#title-flex-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    pointer-events: none;
+}
+
+#title-inner-container {
+    margin: auto;
+}
+
+#title-box {
+    margin: auto;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+}
+
+#sub-title {
+    margin: auto;
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+#self-link {
+    pointer-events: all;
+    text-decoration: none;
+    color: #333;
+}
+
+#self-link:hover {
+    color: #aaa;
+}
