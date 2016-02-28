@@ -1,4 +1,4 @@
-var TIMER_INTERVAL_MILLIS = 10; // TODO: Tune this value
+var TIMER_INTERVAL_MILLIS = 1; // TODO: Tune this value
 
 function Timer(el) {
   if (window === this) {

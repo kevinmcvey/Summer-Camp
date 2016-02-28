@@ -3,15 +3,16 @@ const EVENT_MOUSEUP = 1;
 const EVENT_MOUSEMOVE = 2;
 const EVENT_EXIT = 3;
 
-function InputController(canvasController, square) {
+function InputController(canvasController, square, scheduler) {
   if (window === this) {
-    return new InputController(canvasController, square);
+    return new InputController(canvasController, square, scheduler);
   }
 
   this.canvasController = canvasController;
   this.square = square;
   this.eventLog = [];
-  this.startTime = (new Date()).getTime();
+  this.scheduler = scheduler;
+  this.startTime = this.scheduler.timer.now();
 
   var _this = this;
 
@@ -124,7 +125,7 @@ InputController.prototype = {
   },
 
   logEvent: function(eventId, event) {
-    var currentTime = (new Date()).getTime();
+    var currentTime = this.scheduler.timer.now();
     var executionTime = currentTime - this.startTime;
 
     var log = [eventId, executionTime];
@@ -140,31 +141,35 @@ InputController.prototype = {
   // TODO: Interpolation between events
   replayLogs: function(eventLog) {
     var _this = this;
+    var id = 0;
     eventLog.forEach(function(event) {
 
       (function createTimeout(_this, event) {
         var eventTime = event[1];
 
-        setTimeout(function() {
-          var eventId = event[0];
-          var eventX = event[2];
-          var eventY = event[3];
+        _this.scheduler.scheduleOnce(eventTime,
+          function() {
+            console.log(id);
+            var eventId = event[0];
+            var eventX = event[2];
+            var eventY = event[3];
 
-          switch(eventId) {
-            case EVENT_MOUSEDOWN:
-              $(_this.canvasController.canvas).trigger('mousedown', { pageX: eventX, pageY: eventY, silent: true });
-              break;
-            case EVENT_MOUSEUP:
-              $(_this.canvasController.canvas).trigger('mouseup', { silent: true });
-              break;
-            case EVENT_MOUSEMOVE:
-              $(_this.canvasController.canvas).trigger('mousemove', { pageX: eventX, pageY: eventY, silent: true });
-              break;
-            case EVENT_EXIT:
-              $(_this.canvasController.canvas).trigger('mouseout', { silent: true });
-              break;
+            switch(eventId) {
+              case EVENT_MOUSEDOWN:
+                $(_this.canvasController.canvas).trigger('mousedown', { pageX: eventX, pageY: eventY, silent: true });
+                break;
+              case EVENT_MOUSEUP:
+                $(_this.canvasController.canvas).trigger('mouseup', { silent: true });
+                break;
+              case EVENT_MOUSEMOVE:
+                $(_this.canvasController.canvas).trigger('mousemove', { pageX: eventX, pageY: eventY, silent: true });
+                break;
+              case EVENT_EXIT:
+                $(_this.canvasController.canvas).trigger('mouseout', { silent: true });
+                break;
+            }
           }
-        }, eventTime);
+        );
       })(_this, event);
 
     });

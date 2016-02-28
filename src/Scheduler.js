@@ -16,16 +16,19 @@ function Scheduler(el) {
 Scheduler.prototype.onTick = function() {
   this.safe = false;
 
-  this.events.map(function triggerScheduledEvents(event, eventId) {
+  // TODO: Do something more efficient then store `null` for removed events. This O(n) gets scary
+  this.events.forEach(function triggerScheduledEvents(event, eventId) {
     if (!event) {
-      return null;
+      return;
     }
 
     var now = this.timer.now();
     if (now >= event.requestedAt + event.triggerOn) {
       event.executable();
       event.requestedAt = now;
-      return event.recurring ? event : null;
+      if (!event.recurring) {
+        this.events[eventId] = null;
+      }
     }
   }.bind(this));
 

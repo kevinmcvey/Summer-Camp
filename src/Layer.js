@@ -6,9 +6,9 @@ var DEFAULT_GRADIENT_START_COLOR = '#999999';
 var DEFAULT_GRADIENT_END_COLOR = '#ffffff';
 var MAX_ELEMENTS = 1000;
 
-function Layer(containerId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
+function Layer(containerId, scheduler, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor) {
   if (window === this) {
-    return new Layer(containerId, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor);
+    return new Layer(containerId, scheduler, startX, startY, squareWidth, fillColor, gradientStartColor, gradientEndColor);
   }
 
   startX = (startX === undefined) ? DEFAULT_START_X : startX;
@@ -22,6 +22,7 @@ function Layer(containerId, startX, startY, squareWidth, fillColor, gradientStar
   this.canvasId = this.getRandomElementId();
   this.createLayerCanvas(this.canvasId);
   this.canvasController = new CanvasController(this.canvasId);
+  this.scheduler = scheduler;
 
   this.square = new Square(this.canvasController,
       startX,
@@ -31,7 +32,7 @@ function Layer(containerId, startX, startY, squareWidth, fillColor, gradientStar
       this.gradientStartColor,
       this.gradientEndColor);
 
-  this.inputController = new InputController(this.canvasController, this.square);
+  this.inputController = new InputController(this.canvasController, this.square, this.scheduler);
 
   var _this = this;
   this.canvasController.redrawFunction = function() {

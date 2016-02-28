@@ -1,11 +1,12 @@
-function LayerController(containerId) {
+function LayerController(containerId, scheduler) {
   if (window === this) {
-    return new LayerController(containerId);
+    return new LayerController(containerId, scheduler);
   }
 
   this.containerId = containerId;
   this.layers = [];
   this.activeLayer = 0;
+  this.scheduler = scheduler;
 
   return this;
 }
@@ -18,7 +19,7 @@ LayerController.prototype = {
   // Will add the container on its own. Caller should leave this out
   // and only provide the optional arguments.
   addLayer: function() {
-    var layerArgs = prependToArguments([null, this.containerId], arguments);
+    var layerArgs = prependToArguments([null, this.containerId, this.scheduler], arguments);
     this.layers.push(
       new (Function.prototype.bind.apply(Layer, layerArgs))
     );

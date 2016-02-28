@@ -33,7 +33,7 @@
         <script type="text/javascript" src="src/SummerCamp.js"></script>
         <script type="text/javascript" src="src/Timer.js"></script>
         <script type="text/javascript" src="src/Scheduler.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.min.js"></script>
     </head>
     <body>
         <div id="title-flex-container">
@@ -52,7 +52,8 @@
       $('#title-inner-container').css({ 'margin-left': threeQuartersMargin });
       $('#title-flex-container').fadeOut(10000);
 
-      var layerController = new LayerController('canvas-container');
+      var scheduler = new Scheduler(window);
+      var layerController = new LayerController('canvas-container', scheduler);
       var summerCamp = new SummerCamp(layerController, 'cover-container', 10);
       summerCamp.initialize();
 
