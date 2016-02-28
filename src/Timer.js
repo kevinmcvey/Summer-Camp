@@ -1,4 +1,4 @@
-var TIMER_INTERVAL_MILLIS = 100;
+var TIMER_INTERVAL_MILLIS = 10; // TODO: Tune this value
 
 function Timer(el) {
   if (window === this) {
@@ -40,12 +40,16 @@ Timer.prototype.stop = function() {
   return this;
 }
 
-Timer.prototype.tick = function(parameters) {
+Timer.prototype.tick = function() {
   if (this.startTime) {
     var tickEvent = new jQuery.Event('tick');
-    tickEvent.timeMillis = (new Date()).getTime() - this.startTime - this.pausedTime;
+    tickEvent.timeMillis = this.now();
     this.$el.trigger(tickEvent);
   }
 
   return this;
+}
+
+Timer.prototype.now = function() {
+  return (new Date()).getTime() - this.startTime - this.pausedTime;
 }

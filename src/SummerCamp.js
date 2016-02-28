@@ -9,11 +9,12 @@ function SummerCamp(layerController, coverContainer, dayLimit) {
 
   this.layerController = layerController;
   this.coverContainer = coverContainer;
+  this.scheduler = new Scheduler(window);
 
   this.fadeOpacity = 0.0;
-  this.timePassedId = setInterval(this.onTimePassed.bind(this), FADE_INTERVAL);
+  this.timePassedId = this.scheduler.schedule(FADE_INTERVAL, this.onTimePassed.bind(this));
   // TODO: Consider moving to the time passing function -- it's possible that these aren't syncing properly
-  this.dayPassedId = setInterval(this.onDayPassed.bind(this), FADE_INTERVAL * FADE_STEPS);
+  this.dayPassedId = this.scheduler.schedule(FADE_INTERVAL * FADE_STEPS, this.onDayPassed.bind(this));
   this.dayLimit = dayLimit || DEFAULT_DAY_LIMIT;
   this.daysPassed = 0;
 
@@ -32,6 +33,7 @@ SummerCamp.prototype.initialize = function() {
 };
 
 SummerCamp.prototype.onTimePassed = function() {
+  console.log(this.scheduler.timer.now());
   // TODO: Should this live in layer controller? Given that it's a project-wide
   // fade layer I'm not so sure.
   this.layerController.updateCoverOpacity(this.fadeOpacity);
