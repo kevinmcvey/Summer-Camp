@@ -149,7 +149,6 @@ InputController.prototype = {
 
         _this.scheduler.scheduleOnce(eventTime,
           function() {
-            console.log(id);
             var eventId = event[0];
             var eventX = event[2];
             var eventY = event[3];
