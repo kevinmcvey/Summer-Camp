@@ -9,8 +9,28 @@ function Scheduler(el) {
   this.safe = true;
 
   this.$el.on('tick', this.onTick.bind(this));
+  this.$el.on('blur focus', this.handleFocusChange.bind(this));
 
   return this;
+}
+
+Scheduler.prototype.handleFocusChange = function(event) {
+  var eventType = event.type;
+
+  // Only trigger timer events on state change. Sometimes these double-trigger
+  if (this.$el.data('prevFocusEvent') === eventType) {
+    return;
+  }
+
+  this.$el.data({
+    prevFocusEvent: eventType
+  });
+
+  if (eventType === 'focus') {
+    this.timer.start();
+  } else if (eventType === 'blur') {
+    this.timer.pause();
+  }
 }
 
 Scheduler.prototype.onTick = function() {

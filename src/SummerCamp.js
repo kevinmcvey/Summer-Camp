@@ -9,7 +9,6 @@ function SummerCamp(layerController, coverContainer, dayLimit) {
 
   this.layerController = layerController;
   this.coverContainer = coverContainer;
-  this.scheduler = new Scheduler(window);
 
   this.fadeOpacity = 0.0;
   this.scheduler = layerController.scheduler; // TODO refactor?
