@@ -71,15 +71,15 @@ function InputController(canvasController, square, scheduler) {
   $(this.canvasController.canvas).on('mouseout', mouseout);
 
   // Mobile events
-  $(this.canvasController.canvas).on('touchstart', function(touchEvent) {
+  $(this.canvasController.canvas).on('touchstart', function(unused, touchEvent) {
     mousedown(touchEvent.originalEvent.touches[0]);
   });
 
-  $(this.canvasController.canvas).on('touchmove', function(touchEvent) {
+  $(this.canvasController.canvas).on('touchmove', function(unused, touchEvent) {
     mousemove(touchEvent.originalEvent.touches[0]);
   });
 
-  $(this.canvasController.canvas).on('touchend', function(touchEvent) {
+  $(this.canvasController.canvas).on('touchend', function(unused, touchEvent) {
     mouseup({});
     mouseout({});
   });
