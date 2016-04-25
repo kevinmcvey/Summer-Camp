@@ -65,5 +65,12 @@ LayerController.prototype = {
     this.layers.forEach(function forEachLayer(layer) {
       layer.inputController.replayLogs(layer.inputController.eventLog);
     });
+  },
+
+  concludeDemo: function() {
+    var demoLayer = this.layers[0];
+    this.cover.canvasController.reset();
+    demoLayer.square.returnToStart();
+    demoLayer.inputController.purgeEventLog();
   }
 }

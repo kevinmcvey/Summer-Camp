@@ -3,6 +3,7 @@
     1. Decrease number of steps to ... 8? 5?
     2. Lengthen each step (double?)
     3. Make music sync with each step
+    4. Think about the label for each step. Do I like it? Do I want a silent step at the end with no motion or box?
 
   TODO
     1. Outro
@@ -29,13 +30,14 @@
         <script type="text/javascript" src="src/SummerCamp.js"></script>
         <script type="text/javascript" src="src/Timer.js"></script>
         <script type="text/javascript" src="src/Scheduler.js"></script>
+        <script type="text/javascript" src="src/Title.js"></script>
         <script type="text/javascript" src="jquery.min.js"></script>
     </head>
     <body>
         <div id="title-flex-container">
             <div id="title-inner-container">
                 <div id="title-box">Another Day at Summer Camp</div>
-                <div id="sub-title">an unfinished thing by <a href="http://kevin.4mcveys.com/" id="self-link">Kevin McVey</a></div>
+                <div id="sub-title">an unfinished thing by <a href="http://kevin.4mcveys.com/" id="self-link">Kevin McVey</a><br /><font color="#bbbbbb">move your pointer around the page or drag the square to begin</font></div>
             </div>
         </div>
 
@@ -44,13 +46,14 @@
     </body>
     <script>
       // Page setup
+      // NOTE: IS ON A HARDCODED TIMER INSTEAD OF THE SCHEDULER. V BAD INDEED.
       var threeQuartersMargin = window.innerWidth * (3/4) - ($('#title-inner-container').width() / 2)
       $('#title-inner-container').css({ 'margin-left': threeQuartersMargin });
-      $('#title-flex-container').fadeOut(10000);
+      //$('#title-flex-container').fadeOut(10000);
 
       var scheduler = new Scheduler(window);
       var layerController = new LayerController('canvas-container', scheduler);
-      var summerCamp = new SummerCamp(layerController, 'cover-container', 10);
+      var summerCamp = new SummerCamp(layerController, 'cover-container', $('#title-inner-container'), 4);
       summerCamp.initialize();
 
       $('#self-link').on('mousemove', function(event) {

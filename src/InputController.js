@@ -138,6 +138,11 @@ InputController.prototype = {
     this.eventLog.push(log);
   },
 
+  purgeEventLog: function() {
+    this.eventLog = [];
+    return this;
+  },
+
   // TODO: Interpolation between events
   replayLogs: function(eventLog) {
     var _this = this;
