@@ -32,6 +32,7 @@ canvas {
 
 #title-inner-container {
     margin: auto;
+    opacity: 0;
 }
 
 #title-box {
