@@ -11,8 +11,8 @@ function Title($el) {
 }
 
 Title.prototype.setText = function(primaryText, secondaryText) {
-  this.$primary.text(primaryText || '');
-  this.$secondary.text(secondaryText || '');
+  this.$primary.html(primaryText || '');
+  this.$secondary.html(secondaryText || '');
 
   return this;
 };
@@ -22,6 +22,14 @@ Title.prototype.setOpacity = function(opacity) {
 
   var displayFunction = (opacity) ? 'show' : 'hide';
   this.$el[displayFunction]();
+
+  return this;
+};
+
+Title.prototype.setGraySubtitle = function() {
+  if (!this.$secondary.hasClass('gray-subtitle')) {
+    this.$secondary.addClass('gray-subtitle');
+  }
 
   return this;
 };

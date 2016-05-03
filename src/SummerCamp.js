@@ -101,7 +101,7 @@ SummerCamp.prototype.onDayPassed = function() {
 };
 
 SummerCamp.prototype.updateTitle = function(day) {
-  var title = [
+  var dayNames = [
     'one.',
     'two.',
     'three.',
@@ -122,13 +122,25 @@ SummerCamp.prototype.updateTitle = function(day) {
     'eighteen.',
     'nineteen.',
     'twenty.'
-  ][day];
+  ];
 
   var subTitle = '';
-  for (var i = 0; i <= day; i++) {
-    subTitle += '. ';
+  var title = '';
+  if (day < this.dayLimit) {
+    // Human control
+    title = dayNames[day];
+    for (var i = 0; i < day; i++) {
+      subTitle = dayNames[i] + '<br>' + subTitle;
+    }
+  } else {
+    // Computer control
+    var missingDays = day - this.dayLimit;
+    for (var i = missingDays; i < this.dayLimit; i++) {
+      subTitle = dayNames[i] + '<br>' + subTitle;
+    }
   }
 
+  this.title.setGraySubtitle();
   this.title.setText(title, subTitle);
   return this;
 };

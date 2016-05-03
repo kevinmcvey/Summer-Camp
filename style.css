@@ -39,6 +39,7 @@ canvas {
     margin: auto;
     font-family: 'Raleway', sans-serif;
     font-weight: 200;
+    font-size: 1.3em;
 }
 
 #sub-title {
@@ -46,6 +47,10 @@ canvas {
     font-family: 'Raleway', sans-serif;
     font-size: 12px;
     font-weight: 100;
+}
+
+.gray-title {
+    color: #bbb;
 }
 
 #self-link {
