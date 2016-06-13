@@ -10,7 +10,7 @@ function Title($el) {
   return this;
 }
 
-Title.prototype.setText = function(primaryText, secondaryText) {
+Title.prototype.setText = function(primaryText, secondaryText, grayText) {
   this.$primary.html(primaryText || '');
   this.$secondary.html(secondaryText || '');
 
@@ -27,8 +27,8 @@ Title.prototype.setOpacity = function(opacity) {
 };
 
 Title.prototype.setGraySubtitle = function() {
-  if (!this.$secondary.hasClass('gray-subtitle')) {
-    this.$secondary.addClass('gray-subtitle');
+  if (!this.$secondary.hasClass('gray-title')) {
+    this.$secondary.addClass('gray-title');
   }
 
   return this;

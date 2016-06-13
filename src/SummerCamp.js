@@ -67,6 +67,12 @@ SummerCamp.prototype.onDayPassed = function() {
     this.daysPassed++;
   }
 
+  // When we've exceeded twice our day limit plus one (aka, we've had an outro-day), refresh
+  if (this.daysPassed > this.dayLimit * 2) {
+    location.reload();
+    return;
+  }
+
   // For every day past the day limit, remove a layer's record
   // Alternatively, remove the demo day if we're on it
   if (this.daysPassed > this.dayLimit || this.demoStep) {
@@ -132,12 +138,14 @@ SummerCamp.prototype.updateTitle = function(day) {
     for (var i = 0; i < day; i++) {
       subTitle = dayNames[i] + '<br>' + subTitle;
     }
-  } else {
+  } else if (day < this.dayLimit * 2) {
     // Computer control
     var missingDays = day - this.dayLimit;
     for (var i = missingDays; i < this.dayLimit; i++) {
       subTitle = dayNames[i] + '<br>' + subTitle;
     }
+  } else {
+    subTitle = 'another day at summer camp.';
   }
 
   this.title.setGraySubtitle();
