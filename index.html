@@ -3,12 +3,9 @@
     1. Decrease number of steps to ... 8? 5?
     2. Lengthen each step (double?)
     3. Make music sync with each step
-    4. Think about the label for each step. Do I like it? Do I want a silent step at the end with no motion or box?
 
   TODO
-    1. Outro
-    2. Music (pls)
-    3. Indicate when the user is no longer in control.
+    1. Music (pls)
 
   CLEANUP
     1. Everything should set directly to prototype, not overwrite it
@@ -54,7 +51,7 @@
 
       var scheduler = new Scheduler(window);
       var layerController = new LayerController('canvas-container', scheduler);
-      var summerCamp = new SummerCamp(layerController, 'cover-container', $('#title-inner-container'), 4);
+      var summerCamp = new SummerCamp(layerController, 'cover-container', $('#title-inner-container'), 1);
       summerCamp.initialize();
 
       $('#self-link').on('mousemove', function(event) {
