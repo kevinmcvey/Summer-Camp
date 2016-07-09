@@ -51,6 +51,10 @@ SummerCamp.prototype.setFade = function() {
       this.fadeOpacity -= (1 / FADE_IN_STEPS);
       this.fadeStepsPassed++;
   } else if (this.fadeStepsPassed < (FADE_IN_STEPS + FADE_OUT_STEPS)) {
+    //Yes I'm aware this is an egregious hack but this project is long overdue and I'm tired.
+    if (this.finalFrame) {
+      this.layerController.cover.colorString = '255, 252, 151';
+    }
       this.fadeOpacity += (1 / FADE_OUT_STEPS);
       this.fadeStepsPassed++;
   } else {
@@ -145,7 +149,8 @@ SummerCamp.prototype.updateTitle = function(day) {
       subTitle = dayNames[i] + '<br>' + subTitle;
     }
   } else {
-    subTitle = 'the sun rises to another day at summer camp.';
+    this.finalFrame = true;
+    subTitle = 'another day at summer camp.';
   }
 
   this.title.setGraySubtitle();

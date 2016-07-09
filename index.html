@@ -1,16 +1,3 @@
-<!--
-  CONCEPT:
-    1. Decrease number of steps to ... 8? 5?
-    2. Lengthen each step (double?)
-    3. Make music sync with each step
-
-  TODO
-    1. Music (pls)
-
-  CLEANUP
-    1. Everything should set directly to prototype, not overwrite it
-    2. Layer and cover should inherit from a common parent
--->
 <html>
     <head>
         <title>Another day at summer camp</title>
@@ -44,10 +31,8 @@
     </body>
     <script>
       // Page setup
-      // NOTE: IS ON A HARDCODED TIMER INSTEAD OF THE SCHEDULER. V BAD INDEED.
-      var threeQuartersMargin = window.innerWidth * (3/4) - ($('#title-inner-container').width() / 2)
+      var threeQuartersMargin = window.innerWidth * (3/4) - ($('#title-inner-container').width() / 2);
       $('#title-inner-container').css({ 'margin-left': threeQuartersMargin });
-      //$('#title-flex-container').fadeOut(10000);
 
       var scheduler = new Scheduler(window);
       var layerController = new LayerController('canvas-container', scheduler);
@@ -57,20 +42,5 @@
       $('#self-link').on('mousemove', function(event) {
         layerController.layers[0].inputController.redraw(event.pageX, event.pageY);
       });
-
-      /*
-      var timer = new Timer(window);
-      $(window).on('tick', function(tickEvent) { });
-      $(window).on('blur', function() { timer.pause() });
-      $(window).on('focus', function() { timer.start() });
-      */
-      //timer.start();
-
-
-      // Test code below
-      //var layer1 = new Layer('canvas-container', 100, 100, undefined, undefined, '#ffcccc', '#ffffff');
-      //var layer2 = new Layer('otherCanvas', 300, 300, undefined, undefined, '#ccccff', '#ffffff');
-      //var layer3 = new Layer('thirdCanvas', 500, 500, undefined, undefined, '#ccffcc', '#ffffff');
-      //var cover = new Cover('cover', layer1.canvasId);
     </script>
 </html>

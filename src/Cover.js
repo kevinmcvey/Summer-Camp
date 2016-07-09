@@ -1,7 +1,7 @@
 var PASSTHROUGH_EVENTS = ['mousedown', 'mouseup', 'mousemove', 'mouseout', 'touchstart', 'touchend', 'touchmove'];
 var MAX_ELEMENTS = 1000;
 
-function Cover(containerId, coveredElementId) {
+function Cover(containerId, coveredElementId, colorString) {
   if (window === this) {
     return new Cover(containerId, coveredElementId);
   }
@@ -9,6 +9,7 @@ function Cover(containerId, coveredElementId) {
   this.containerId = containerId;
   this.coverId = this.getRandomElementId();
   this.createCoverCanvas(this.coverId);
+  this.colorString = colorString || '255, 255, 255';
 
   this.coveredElementId = coveredElementId;
   this.canvasController = new CanvasController(this.coverId);

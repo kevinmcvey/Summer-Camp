@@ -52,7 +52,7 @@ LayerController.prototype = {
     var width = this.cover.canvasController.width;
     var height = this.cover.canvasController.height;
     this.cover.canvasController.reset();
-    this.cover.canvasController.rect(0, 0, width, height, 'rgba(255, 255, 255, ' + opacity + ')');
+    this.cover.canvasController.rect(0, 0, width, height, 'rgba(' + this.cover.colorString + ', ' + opacity + ')');
   },
 
   returnAllLayersToStart: function() {
