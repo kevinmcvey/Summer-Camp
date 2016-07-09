@@ -145,7 +145,7 @@ SummerCamp.prototype.updateTitle = function(day) {
       subTitle = dayNames[i] + '<br>' + subTitle;
     }
   } else {
-    subTitle = 'another day at summer camp.';
+    subTitle = 'the sun rises to another day at summer camp.';
   }
 
   this.title.setGraySubtitle();
