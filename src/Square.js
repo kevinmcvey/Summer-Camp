@@ -48,7 +48,7 @@ Square.prototype = {
     this.canvasController.rect(this.x, this.y, this.width, this.width, this.fillColor);
   },
 
-  drawShadow(lightX, lightY) {
+  drawShadow: function(lightX, lightY) {
     var quadrant = this.getQuadrant(lightX, lightY);
     //if (quadrant === -1) { return; }
 
@@ -57,7 +57,7 @@ Square.prototype = {
     this.canvasController.shape(shadowPoints, this.shadowGradient);
   },
 
-  regenerateRadialGradient() {
+  regenerateRadialGradient: function() {
     return this.canvasController.pageRadialGradient(this.cx, this.cy, this.gradientStartColor, this.gradientEndColor);
   },
 
@@ -84,7 +84,7 @@ Square.prototype = {
         [this.exteriorPoints[1][0], this.exteriorPoints[0][1]]];
   },
 
-  isWithinSquare(x, y) {
+  isWithinSquare: function(x, y) {
     return (x >= this.x && x <= this.x + this.width &&
         y >= this.y && y <= this.y + this.width);
   },
