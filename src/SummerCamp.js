@@ -50,11 +50,12 @@ SummerCamp.prototype.setFade = function() {
   if (this.fadeStepsPassed < FADE_IN_STEPS) {
       this.fadeOpacity -= (1 / FADE_IN_STEPS);
       this.fadeStepsPassed++;
+      if (this.stopOnNextFade) {
+        this.scheduler.timer.pause();
+        this.scheduler.$el.off();
+        return;
+      }
   } else if (this.fadeStepsPassed < (FADE_IN_STEPS + FADE_OUT_STEPS)) {
-    //Yes I'm aware this is an egregious hack but this project is long overdue and I'm tired.
-    if (this.finalFrame) {
-      this.layerController.cover.colorString = '255, 252, 151';
-    }
       this.fadeOpacity += (1 / FADE_OUT_STEPS);
       this.fadeStepsPassed++;
   } else {
@@ -73,7 +74,7 @@ SummerCamp.prototype.onDayPassed = function() {
 
   // When we've exceeded twice our day limit plus one (aka, we've had an outro-day), refresh
   if (this.daysPassed > this.dayLimit * 2) {
-    location.reload();
+    this.stopOnNextFade = true; // Huge hack
     return;
   }
 
@@ -149,6 +150,7 @@ SummerCamp.prototype.updateTitle = function(day) {
       subTitle = dayNames[i] + '<br>' + subTitle;
     }
   } else {
+    // Just show the ending text.
     this.finalFrame = true;
     subTitle = 'another day at summer camp.';
   }
