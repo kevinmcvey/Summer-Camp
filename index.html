@@ -1,6 +1,18 @@
+<!--
+  ANOTHER DAY AT SUMMER CAMP                :: http://anotherdayatsummer.camp
+  a little something by Kevin McVey         :: http://kevin.4mcveys.com
+  (source available on github)              :: https://github.com/kevinmcvey/Summer-Camp
+
+  Another Day At Summer Camp was developed on-and-off between September 2015 and July 2016,
+  thank you so much for taking a moment to meditate with it.
+  Thoughts, comments? I'd love to hear them: mcveymk@gmail.com
+
+  :: From Harrogate, Annapolis, Hanover, Warrenton, Stafford, Charlottesville, and Seattle ::
+          Another Day At Summer Camp
+-->
 <html>
     <head>
-        <title>Another day at summer camp</title>
+        <title>Another Day At Summer Camp</title>
         <link href='https://fonts.googleapis.com/css?family=Raleway:200,100' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="style.css">
         <script type="text/javascript" src="src/Util.js"></script>
@@ -20,7 +32,7 @@
         <div id="title-flex-container">
             <div id="title-inner-container">
                 <div id="title-box">Another Day at Summer Camp</div>
-                <div id="sub-title">an unfinished thing by <a href="http://kevin.4mcveys.com/" id="self-link">Kevin McVey</a><br />
+                <div id="sub-title"><a href="http://kevin.4mcveys.com/" class="over-link">a little something by Kevin McVey</a>
                     <div class="gray-title">move your pointer around the page or drag the square to begin</div>
                 </div>
             </div>
@@ -36,10 +48,10 @@
 
       var scheduler = new Scheduler(window);
       var layerController = new LayerController('canvas-container', scheduler);
-      var summerCamp = new SummerCamp(layerController, 'cover-container', $('#title-inner-container'), 1);
+      var summerCamp = new SummerCamp(layerController, 'cover-container', $('#title-inner-container'), 8);
       summerCamp.initialize();
 
-      $('#self-link').on('mousemove', function(event) {
+      $('.over-link').on('mousemove', function(event) {
         layerController.layers[0].inputController.redraw(event.pageX, event.pageY);
       });
     </script>

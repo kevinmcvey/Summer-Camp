@@ -53,12 +53,12 @@ canvas {
     color: #bbb;
 }
 
-#self-link {
+.over-link {
     pointer-events: all;
     text-decoration: none;
     color: #333;
 }
 
-#self-link:hover {
-    color: #aaa;
+.over-link:hover {
+    color: #eaa;
 }
