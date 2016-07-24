@@ -1,5 +1,8 @@
-# "Another Day At Summer Camp"
+# Another Day At Summer Camp
 
-An interactive web-installation by Kevin McVey.
+![another day at summer camp banner image](http://kevin.4mcveys.com/summercamp/img/wide-image.jpg)
 
-Still a work-in-progress.
+
+[anotherdayatsummer.camp](http://anotherdayatsummer.camp) &middot; An interactive media installation by [Kevin McVey](http://kevin.4mcveys.com)
+
+Developed on-and-off between September 2015 and July 2016. Mobile friendly but preferably viewed on larger format screens. Source made available for hacking and bewilderment.
